@@ -1,4 +1,4 @@
-Do the following to one of the masters. 
+#Do the following to one of the masters. 
  
  ssh-keygen -t rsa
  
@@ -7,7 +7,6 @@ Do the following to one of the masters.
  setenforce 0
  sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
 
- 
  firewall-cmd --permanent --add-port=10250/tcp
  firewall-cmd --permanent --add-port=10255/tcp
  firewall-cmd --permanent --add-port=30000-32767/tcp
@@ -30,19 +29,19 @@ Do the following to one of the masters.
  cd kubespray
  sudo pip install -r requirements.txt
  
- # might have to intall argparse and requirements manually.
+# might have to intall argparse and requirements manually.
  
  declare -a IPS=(YOUR LIST OF IPS SEPERATED BY A SPACE)
  CONFIG_FILE=inventory/mycluster/hosts.ini python36 contrib/inventory_builder/inventory.py ${IPS[@]}
 
- # or just vim inventory/mycluster/hosts.ini
+# or just vim inventory/mycluster/hosts.ini
 
- # Choose network plugin (cilium, calico, contiv, weave or flannel)
- # Can also be set to 'cloud', which lets the cloud provider setup appropriate routing
+# Choose network plugin (cilium, calico, contiv, weave or flannel)
+# Can also be set to 'cloud', which lets the cloud provider setup appropriate routing
  kube_network_plugin: weave
  
  vim inventory/mycluster/group_vars/all.yml
- # The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
+# The read-only port for the Kubelet to serve on with no authentication/authorization. Uncomment to enable.
  kube_read_only_port: 10255
  
  ansible-playbook -i inventory/mycluster/hosts.ini cluster.yml
